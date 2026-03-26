@@ -1,11 +1,19 @@
 from pathlib import Path
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-ecostock-sim-universidad-demo"
-DEBUG = True
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+# 🔐 Seguridad
+SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-ecostock-sim-universidad-demo")
 
+DEBUG = os.environ.get("DEBUG", "True") == "True"
+
+ALLOWED_HOSTS = os.environ.get(
+    "ALLOWED_HOSTS",
+    "ecostock-sim.onrender.com,127.0.0.1,localhost"
+).split(",")
+
+# 📦 Apps
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -16,6 +24,7 @@ INSTALLED_APPS = [
     "inventory",
 ]
 
+# ⚙️ Middleware
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -28,6 +37,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "ecostock_sim.urls"
 
+# 🎨 Templates
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -44,8 +54,10 @@ TEMPLATES = [
     },
 ]
 
+# 🚀 WSGI
 WSGI_APPLICATION = "ecostock_sim.wsgi.application"
 
+# 🗄️ Base de datos (SQLite funciona en Render para pruebas)
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -53,19 +65,24 @@ DATABASES = {
     }
 }
 
+# 🔑 Validaciones
 AUTH_PASSWORD_VALIDATORS = []
 
+# 🌎 Configuración regional
 LANGUAGE_CODE = "es-mx"
 TIME_ZONE = "America/Mexico_City"
 USE_I18N = True
 USE_TZ = True
 
+# 📁 Archivos estáticos
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+# 🔐 Login
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "dashboard"
 LOGOUT_REDIRECT_URL = "login"
 
+# 🔢 Default
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
