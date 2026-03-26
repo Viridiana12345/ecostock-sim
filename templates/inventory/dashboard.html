@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<section class="page-header">
+  <div>
+    <span class="badge">Panel principal</span>
+    <h2>Dashboard de inventario</h2>
+    <p class="muted">Versión simulada para pruebas académicas de funcionamiento y seguridad.</p>
+  </div>
+</section>
+
+<section class="stats-grid">
+  <article class="stat-card"><span>Total productos</span><strong>{{ total_products }}</strong></article>
+  <article class="stat-card"><span>Unidades en stock</span><strong>{{ total_units }}</strong></article>
+  <article class="stat-card"><span>Bajo stock</span><strong>{{ low_stock }}</strong></article>
+  <article class="stat-card"><span>Agotados</span><strong>{{ out_of_stock }}</strong></article>
+</section>
+
+<section class="content-grid">
+  <article class="card">
+    <div class="card-title-row">
+      <h3>Productos recientes</h3>
+      <a class="text-link" href="/productos/">Ver todo</a>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Producto</th><th>SKU</th><th>Cantidad</th><th>Estado</th></tr>
+        </thead>
+        <tbody>
+          {% for item in recent_products %}
+          <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.sku }}</td>
+            <td>{{ item.quantity }}</td>
+            <td><span class="pill">{{ item.status }}</span></td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="4">Sin datos todavía.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </article>
+
+  <article class="card">
+    <h3>Categorías</h3>
+    <div class="category-list">
+      {% for row in categories %}
+        <div class="category-item">
+          <span>{{ row.category }}</span>
+          <strong>{{ row.total }}</strong>
+        </div>
+      {% empty %}
+        <p class="muted">No hay categorías registradas.</p>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+{% endblock %}

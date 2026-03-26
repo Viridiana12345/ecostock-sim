@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}EcoStock Sim{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <div class="layout">
+    {% if request.user.is_authenticated %}
+    <aside class="sidebar">
+      <div>
+        <h1>EcoStock</h1>
+        <p class="muted">Simulación Django</p>
+      </div>
+      <nav>
+        <a href="/">Dashboard</a>
+        <a href="/productos/">Inventario</a>
+        <a href="/productos/nuevo/">Nuevo producto</a>
+        <a href="/admin/">Admin</a>
+      </nav>
+      <form action="/logout/" method="post">
+        {% csrf_token %}
+        <button class="btn btn-outline" type="submit">Cerrar sesión</button>
+      </form>
+    </aside>
+    {% endif %}
+
+    <main class="main {% if not request.user.is_authenticated %}main-auth{% endif %}">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</body>
+</html>
